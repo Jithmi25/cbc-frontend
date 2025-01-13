@@ -23,7 +23,7 @@ export default function LoginPage() {
 
         <div className="relative z-10">
           <h1 className="text-3xl font-bold text-center text-purple-700 mb-6">
-            Login Page
+            Login
           </h1>
 
           <div className="flex items-center mb-4 bg-gray-100 rounded-lg">
