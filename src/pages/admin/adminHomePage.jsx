@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { FaTachometerAlt, FaBox, FaShoppingCart, FaUsers } from "react-icons/fa";
+import AdminProduct from "./adminProducts";
 
 export default function AdminHomePage() {
   return (
@@ -41,7 +42,7 @@ export default function AdminHomePage() {
       <div className="bg-pink-200 w-[80%] h-screen p-4">
         <Routes>
           <Route path="dashboard" element={<h1>Dashboard</h1>} />
-          <Route path="products" element={<h1>Products</h1>} />
+          <Route path="products" element={<AdminProduct/>} />
           <Route path="orders" element={<h1>Orders</h1>} />
           <Route path="customers" element={<h1>Customers</h1>} />
         </Routes>
