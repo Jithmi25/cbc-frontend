@@ -20,9 +20,18 @@ export default function LoginPage() {
         'Content-Type': 'application/json',
       }
     })
-
     .then((res) => {
       console.log(res)
+     
+      if(res.data.user==null){
+        return
+      }
+      localStorage.setItem("token",res.data.token)
+      if(res.data.user.type=="admin"){
+        window.location.href = "/adminHome"
+      }else{
+        window.location.href = "/"
+      }
       // Check if res.data.statusText exists and display it in an alert
       if (res.data && res.data.statusText) {
         alert(res.data.statusText);
