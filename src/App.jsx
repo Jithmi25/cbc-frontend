@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'; // Corrected import
+import { BrowserRouter, Routes, Route } from 'react-router-dom'; 
+import LoginPage from './pages/loginPage';
+import HomePage from './pages/start';
 
 
 function App() {
@@ -8,16 +10,12 @@ function App() {
 
   return (
     <>
-  {/* <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1> */}
-      {/* <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
+       <BrowserRouter>
+        <Routes> 
           <Route path="/Login" element={<LoginPage />} />
-          <Route path="*" element={<h1><b>404 error</b></h1>} /> {/* Handle undefined paths */}
-        {/* </Routes>
-      </BrowserRouter> */} 
+          <Route path="*" element={<HomePage/>} /> 
+        </Routes>
+      </BrowserRouter> 
     </>
   );
 }
