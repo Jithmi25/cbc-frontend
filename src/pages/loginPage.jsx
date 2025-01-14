@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { FaUser, FaLock } from "react-icons/fa";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   function login() {
-    if (!email.trim() || !password.trim()) {
-      alert("Please fill in both fields.");
+      if (!email.trim() || !password.trim()) {
+      toast.error("Please fill in both fields.");
       return;
     }
-    
     axios.post("http://localhost:3000/api/user/Login", {
       email: email,
       password: password,
@@ -20,32 +20,73 @@ export default function LoginPage() {
         'Content-Type': 'application/json',
       }
     })
-    .then((res) => {
-      console.log(res)
-     
-      if(res.data.user==null){
-        return
-      }
-      localStorage.setItem("token",res.data.token)
-      if(res.data.user.type=="admin"){
-        window.location.href = "/adminHome"
-      }else{
-        window.location.href = "/"
-      }
-      // Check if res.data.statusText exists and display it in an alert
-      if (res.data && res.data.statusText) {
-        alert(res.data.statusText);
+      .then((res) => {
+        console.log(res);
+    
+        if (res.data.user == null) {
+          toast.error(res.data.message || "Invalid credentials.");
+          return;
+        }
+      localStorage.setItem("token", res.data.token);
+      
+      if (res.data.user.type == "admin") {
+        window.location.href = "/adminHome";
       } else {
-        alert("Login successful!");
+        window.location.href = "/";
       }
+      
+      toast.custom((t) => (
+        <div
+          className={`${
+            t.visible ? 'animate-enter' : 'animate-leave'
+          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+        >
+          <div className="flex-1 w-0 p-4">
+            <div className="flex items-start">
+              <div className="ml-3 flex-1">
+                <p className="text-sm font-medium text-gray-900">Login successful! 😊</p>
+                <p className="mt-1 text-sm text-gray-500">Welcome</p>
+              </div>
+            </div>
+          </div>
+          <div className="flex border-l border-gray-200">
+            <button
+              onClick={() => toast.dismiss(t.id)}
+              className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      ));
     })
     .catch((err) => {
-      // Handle error and alert a relevant message
       console.error(err);
-      alert("Login failed. Please check your credentials.");})
-    
-  }
+      toast.custom((t) => (
+        <div
+          className={`${
+            t.visible ? 'animate-enter' : 'animate-leave'
+          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}>
+          <div className="flex-1 w-0 p-4">
+            <div className="flex items-start">
+              <div className="ml-3 flex-1">
+                <p className="text-sm font-medium text-gray-900">Login failed.😔</p>
+                <p className="mt-1 text-sm text-gray-500">Please check your credentials.</p>
+              </div>
+            </div>
+          </div>
+          <div className="flex border-l border-gray-200">
+            <button
+              onClick={() => toast.dismiss(t.id)}
+              className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >Close</button>
+          </div>
+        </div>
+      ))
 
+    });
+  }
+  
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500">
       {/* Semi-transparent overlay to lighten the background */}
