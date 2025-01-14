@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { FaTachometerAlt, FaBox, FaShoppingCart, FaUsers } from "react-icons/fa";
 import AdminProduct from "./adminProducts";
+import AddProducts from "./addProduct";
 
 export default function AdminHomePage() {
   return (
@@ -39,12 +40,14 @@ export default function AdminHomePage() {
       </div>
 
       {/* Main Content */}
-      <div className="bg-pink-200 w-[80%] h-screen p-4">
+      <div className="bg-pink-100 w-[80%] h-screen p-4">
         <Routes>
-          <Route path="dashboard" element={<h1>Dashboard</h1>} />
-          <Route path="products" element={<AdminProduct/>} />
-          <Route path="orders" element={<h1>Orders</h1>} />
-          <Route path="customers" element={<h1>Customers</h1>} />
+          <Route path="/dashboard" element={<h1>Dashboard</h1>} />
+          <Route path="/products" element={<AdminProduct/>} />
+          <Route path="/products/addProducts" element={<AddProducts/>} />
+          <Route path="/orders" element={<h1>Orders</h1>} />
+          <Route path="/customers" element={<h1>Customers</h1>} />
+          <Route path="/*" element={<h1>404 Not Found</h1>} />
         </Routes>
       </div>
     </div>
